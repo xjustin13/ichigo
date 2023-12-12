@@ -1,0 +1,29 @@
+<dl>
+  <dt>Name</dt>
+  <dd><%= @customer.name %></dd>
+  <dt>Tier</dt>
+  <% if @customer.next_tier.nil? %>
+    <dd><%= @customer.tier.name %></dd>
+  <% else %>
+    <dd class='tier'><span><%= @customer.tier.name %></span> <span><%= @customer.next_tier.name %></span></dd>
+    <dd>
+      <div class='progress progress-success'>
+        <%= content_tag(:div, nil, :class=>'bar', :style=>"width: #{(@customer.progress_to_next_tier*100).floor}%;")%>
+      </div>
+    </dd>
+  <% end %>
+  <dt>Tier Start Date</dt>
+  <dd><%= @customer.tier_start_date %></dd>
+  <dt>Spent</dt>
+  <dd><%= number_to_currency(@customer.spent)%></dd>
+  <dt>Spend to Reach Next Tier</dt>
+  <dd><%= (number_to_currency(@customer.spend_to_reach_next_tier) unless @customer.spend_to_reach_next_tier.nil?) || 'N/A' %></dd>
+  <dt>Downgrade Tier</dt>
+  <dd><%= @customer.downgrade_tier.try(:name) || 'N/A' %></dd>
+  <dt>Downgrade Date</dt>
+  <dd><%= @customer.downgrade_date %></dd>
+  <dt>Spend to Avoid Downgrade</dt>
+  <dd><%= number_to_currency(@customer.spend_to_avoid_downgrade)%></dd>
+</dl>
+
+<%= link_to('orders', customer_orders_path(@customer))%>

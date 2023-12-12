@@ -1,0 +1,178 @@
+/* 12 column grid, 11 gutters */
+/* 45px column, 15px gutter, 705px site width */
+/*
+   span1  45px
+   span2  105px
+   span3  165px
+   span4  225px
+   span5  285px
+   span6  345px
+   span7  405px
+   span8  465px
+   span9  525px
+   span10 585px
+   span11 645px
+   span12 705px
+*/
+
+/***********  Color Palette  *************/
+
+/* Based on #fff scale at https://www.w3schools.com/colors/colors_picker.asp */
+@function gray($percent) {
+  $color: lighten(black, $percent);
+  @return $color;
+}
+
+/***********  Variables ******************/
+
+$imagePath: '/images';
+$bodyBackground: white;
+$textColor: #222;
+$linkColor: #0000EE;
+$headerLinkColor: darken($linkColor, 15%);
+$headerBorderColor: gray(90);
+$highlightColor: #ffffcc;
+$gridColumnWidth: 45px;
+$gridGutterWidth: 15px;
+$baseFontSize: 18px;
+$baseLineHeight: $baseFontSize*1.5;
+$logoFontSize: 36px;
+$fontScaleFactor: 1.2;
+$borderBoxSelectors: 'div, textarea';
+@import 'bootstrap/bootstrap';
+
+/****************  Mixins and Functions  ****************/
+
+@function pow($base, $exponent) {
+  $result: 1;
+  @for $_ from 1 through $exponent {
+    $result: $result * $base;
+  }
+  @return $result;
+}
+
+@function upscale-basefont($times) {
+  $fontSize: pow($fontScaleFactor, $times) * $baseFontSize;
+  @return $fontSize;
+}
+
+@function downscale-basefont($times) {
+  $fontSize: pow(1/$fontScaleFactor, $times) * $baseFontSize;
+  @return $fontSize;
+}
+
+@mixin flexbox {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+
+@mixin a($class: null, $not-btn: false) {
+  @if $not-btn {
+    a#{$class}:not(.btn), a#{$class}:not(.btn):link, a#{$class}:not(.btn):visited, a#{$class}:not(.btn):focus, a#{$class}:not(.btn):hover, a#{$class}:not(.btn):active {
+      @content;
+    }
+  } @else {
+    a#{$class}, a#{$class}:link, a#{$class}:visited, a#{$class}:focus, a#{$class}:hover, a#{$class}:active {
+      @content;
+    }
+  }
+}
+
+@mixin a-focus($class: null, $not-btn: false) {
+  @if $not-btn {
+    a#{$class}:not(.btn):focus, a#{$class}:not(.btn):hover, a#{$class}:not(.btn):active {
+      @content;
+    }
+  } @else {
+    a#{$class}:focus, a#{$class}:hover, a#{$class}:active {
+      @content;
+    }
+  }
+}
+
+/****************  Typography  ****************/
+
+@include a($not-btn: true) {text-decoration:underline;}
+a:not(.btn):active {color:#EE0000;}
+legend {
+  all: revert;
+  background-color:$bodyBackground;
+  font-weight:bold;
+  padding-left:10px; padding-right:10px;
+  border:1px solid darken($wellBackground, 7%);
+}
+code {all:revert;}
+ul.breadcrumb {
+  padding:0;
+  margin-top:-40px;
+  background-color:transparent;
+  font-size: downscale-basefont(1);
+}
+
+/****************  Structure  ****************/
+
+#{$borderBoxSelectors} {@include box-sizing(border-box);}
+
+html {width:100%; height:100%;}
+body {width:100%; height:100%;}
+div#body {position:relative; min-height:100%;}
+
+table {
+  width:100%;
+  th:last-child, td:last-child {text-align:right;}
+}
+
+pre {margin:0; padding:0; border:none;}
+
+hr {display:none;}
+
+header {
+  height:110px;
+  margin-bottom:40px;
+  border-bottom:4px solid $headerBorderColor;
+  text-align:center;
+  position:relative;
+  @include a($not-btn: true) {
+    color:$headerLinkColor;
+    text-decoration:none;
+  }
+  @include a-focus($not-btn: true) {
+    color:darken($headerLinkColor, 15%);
+    text-decoration:underline;
+  }
+  a#logo {
+    display:inline-block;
+    padding-left:20px;
+    padding-right:20px;
+    font-size:$logoFontSize;
+    line-height:60px;
+    font-weight:bold;
+  }
+  h1 {
+    margin:0;
+    font-size:$baseFontSize;
+    line-height:1;
+    font-weight:normal;
+    color: gray(60);
+  }
+}
+
+footer {
+  position:absolute; bottom:0; left:0; right:0;
+  border-top:2px solid $headerBorderColor;
+  line-height:60px;
+  text-align:center;
+}
+
+main {
+  position:relative;
+  padding-bottom:140px;
+  div {
+    &.progress{padding:0; height:15px;}
+    &.bar{padding:0;}
+  }
+  dd.tier{@include flexbox; justify-content: space-between;}
+}

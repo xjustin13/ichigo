@@ -1,0 +1,19 @@
+<% @orders = @orders.page(params[:page])%>
+<p>Orders (<%= "page #{@orders.current_page} of #{@orders.total_pages}" %>)</p>
+
+<table class='table table-condensed'>
+  <tr>
+    <th>ID</th>
+    <th>Date</th>
+    <th>Total</th>
+  </tr>
+  <% @orders.each do |order| %>
+    <tr>
+      <td><%= order.id %></td>
+      <td><%= order.created_at %></td>
+      <td><%= number_to_currency(order.total)%></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= pagination_tag(@orders)%>

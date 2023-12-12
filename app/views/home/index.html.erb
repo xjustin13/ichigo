@@ -1,0 +1,23 @@
+<%= field_set_tag('API Endpoints', :class=>'well') do %>
+<pre>
+<b>Customer</b>
+Show [GET]:
+/customers/:id
+/customers/:id.json
+
+<b>Order</b>
+Index [GET]:
+/customers/:id/orders
+/customers/:id/orders.json
+
+Create [POST]:
+/orders
+</pre>
+<% end %>
+
+<p><b>Sample Customers:</b></p>
+<ul class='unstyled'>
+  <% @customers.each do |customer| %>
+    <li><%= link_to(customer.name, customer_path(customer))%></li>
+  <% end %>
+</ul>

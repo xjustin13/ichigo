@@ -1,0 +1,23 @@
+# Order of operations
+
+deploy:cold
+  update
+    - update_code
+    - create_symlink
+  migrate
+  start
+    - empty
+
+deploy
+  update
+    - update_code
+    - create_symlink
+  restart
+    - empty
+
+deploy:migrations
+  update_code
+  migrate
+  create_symlink
+  restart
+    - empty

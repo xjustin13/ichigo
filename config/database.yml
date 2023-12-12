@@ -1,0 +1,22 @@
+development: &defaults
+  adapter: postgresql
+  username: postgres
+  database: ichigo_development
+  pool: 5
+  timeout: 5000
+  encoding: utf8
+
+test:
+  <<: *defaults
+  database: ichigo_test
+  min_messages: error
+
+production:
+  <<: *defaults
+  username: postgres
+  database: ichigo_production
+
+staging:
+  <<: *defaults
+  username: postgres
+  database: ichigo_staging

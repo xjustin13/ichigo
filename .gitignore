@@ -1,0 +1,11 @@
+# Rails default
+/.bundle
+/db/*.sqlite3
+/log/*.log
+/tmp
+
+# dotenv
+.env
+
+# Mac specific
+.DS_Store

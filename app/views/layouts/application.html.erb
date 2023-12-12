@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <%= render('layouts/head')%>
+<body onload='const containers=document.getElementsByClassName("container"); if(window.innerWidth<705)for(;containers.length;)containers[0].classList.replace("container","container-fluid");'>
+<div id='body'>
+  <header class='container'>
+    <%= link_to('ICHIGO HOMEWORK', root_path, :id=>'logo')%>
+    <%= content_tag(:h1, @h1 || 'Code challenge: Loyalty tiers')%>
+  </header>
+  <hr>
+
+  <main class='container'>
+    <%= breadcrumb_tag %>
+    <%= yield %>
+  </main>
+
+  <hr>
+  <footer class='container'>
+    <%= "&copy; #{Date.today.year} Ichigo".html_safe %>
+  </footer>
+</div>
+</body>
+</html>
